@@ -32,7 +32,14 @@ app.get('/api',(req,res,next) => {
     // })
 })
 
-
+app.post('/api',(req,res,next)=>{
+    console.log(req.file)
+    Login.create(req.body)
+    .then(data => {
+        console.log(data)
+        res.send({data})
+    })
+})
 
 //Error
 app.use((err, req, res, next) => {

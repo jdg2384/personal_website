@@ -22,11 +22,11 @@ const SiteShema = new Schema({
 
 });
 
-// const LoginShema = new Schema({
-//     username: { type: String, required: true, index: { unique: true } },
-//     password: { type: String, required: true }
-// });
+const LoginShema = new Schema({
+    username: { type: String, required: true, index: { unique: true } },
+    password: { type: String, required: true }
+});
 
 const Site = mongoose.model('Site', SiteShema);
-// const Login = mongoose.model('Login', LoginShema);
-module.exports = Site;
+const Login = mongoose.model('Login', LoginShema);
+module.exports = Site , Login;
