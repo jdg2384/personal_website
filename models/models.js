@@ -24,7 +24,8 @@ const SiteShema = new Schema({
 
 const LoginShema = new Schema({
     username: { type: String, required: true, index: { unique: true } },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    salt: String
 });
 
 const Site = mongoose.model('Site', SiteShema);

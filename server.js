@@ -32,14 +32,34 @@ app.get('/api',(req,res,next) => {
     // })
 })
 
-app.post('/api',(req,res,next)=>{
-    console.log(req.file)
-    Login.create(req.body)
-    .then(data => {
-        console.log(data)
-        res.send({data})
+app.post('/Login',(req,res,next)=>{
+    var salt = bcrypt.genSaltSync(4)
+    var hash = bcrypt.hashSync(req.body.password, salt);
+    Login.create({
+        username:req.body.username,
+        password:hash,
+        salt:salt
+    })
+    .then(user=>{
+        res.status(204).send({id:user[0].id})
     })
 })
+
+// app.post('/login', function(req, res, next){
+//     var salt = bcrypt.genSaltSync(4)
+//     var hash = bcrypt.hashSync(req.body.password, salt);
+//     knex('info').insert({
+//         first:req.body.first,
+//         last:req.body.last,
+//         email:req.body.email,
+//         password:hash,
+//         salt:salt
+//     },'*') 
+//     .then(user=>{
+//         res.status(204).send({id:user[0].id})
+//     })
+// })
+
 
 //Error
 app.use((err, req, res, next) => {
