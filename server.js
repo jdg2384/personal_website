@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 
 // Get All API
 app.get('/api',(req,res,next) => {
-    console.log(req.body)
+    //console.log(req.body)
     res.send({working:'working'})
     // Site.find((err, site) => {
     //     res.json(site); // return all employees in JSON format
@@ -32,6 +32,16 @@ app.get('/api',(req,res,next) => {
     // })
 })
 
+app.get('/login',(req,res,next) => {
+    //console.log(req.body)
+    //res.send({working:'working'})
+    Login.find((err, login) => {
+        res.json(login); // return all employees in JSON format
+    })
+    .catch(err => {
+        res.send(err)
+    })
+})
 app.post('/Login',(req,res,next)=>{
     var salt = bcrypt.genSaltSync(4)
     var hash = bcrypt.hashSync(req.body.password, salt);
@@ -41,25 +51,41 @@ app.post('/Login',(req,res,next)=>{
         salt:salt
     })
     .then(user=>{
-        res.status(204).send({id:user[0].id})
+        console.log(user)
+        res.status(204).send({id:user._id})
     })
 })
-
-// app.post('/login', function(req, res, next){
+// app.post('/login',(req,res,next)=>{
+//     //console.log('REQ BODY',req.body.username,req.body.password)
 //     var salt = bcrypt.genSaltSync(4)
 //     var hash = bcrypt.hashSync(req.body.password, salt);
-//     knex('info').insert({
-//         first:req.body.first,
-//         last:req.body.last,
-//         email:req.body.email,
-//         password:hash,
-//         salt:salt
-//     },'*') 
-//     .then(user=>{
-//         res.status(204).send({id:user[0].id})
+//     let login = new Login(req.body)
+    
+//     login.save((err, user) => {  
+//         if (err) {
+//             return res.status(500).send(err);
+//         }
+//         console.log(user)
+//         res.status(200).send(user);
 //     })
+//     // .then(data => {
+//     //     console.log('Data in then',data)
+//     //     res.status(204).send({id:data._id})
+//     // })
 // })
 
+app.post('/check',(req,res,next)=>{
+    console.log("body",req.body)
+    Login.find({
+        username: req.body.username
+    })
+    .then( user => {
+        console.log('check',user);
+        bcrypt.compare(req.body.password, user.password, function(err, ver) {
+            ver ? res.status(200).send({id:user._id}): res.sendStatus(401)
+        })
+    })
+})
 
 //Error
 app.use((err, req, res, next) => {
