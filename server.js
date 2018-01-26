@@ -51,7 +51,7 @@ app.post('/Login',(req,res,next)=>{
         salt:salt
     })
     .then(user=>{
-        console.log(user)
+        //console.log('user',user)
         res.status(204).send({id:user._id})
     })
 })
@@ -75,13 +75,14 @@ app.post('/Login',(req,res,next)=>{
 // })
 
 app.post('/check',(req,res,next)=>{
-    console.log("body",req.body)
-    Login.find({
-        username: req.body.username
+    //console.log("body",req.body)
+    Login.findOne({
+        username: req.body.username,
     })
     .then( user => {
         console.log('check',user);
         bcrypt.compare(req.body.password, user.password, function(err, ver) {
+            //console.log('req.body.password: ',req.body.password,'user.password: ', user.password)
             ver ? res.status(200).send({id:user._id}): res.sendStatus(401)
         })
     })

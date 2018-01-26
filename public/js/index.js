@@ -6,7 +6,7 @@ $( document ).ready(function() {
         }
         //console.log(data)
         data.map(user => {
-            console.log(user)
+            //console.log('Index.js',user)
             $('#messDate').append(`
             <i>${user._id}</i>
             <i>${user.username}</i>
@@ -33,8 +33,9 @@ $( document ).ready(function() {
             type: 'POST',
             data: obj,
             success: function (data) {
+                console.log("success")
             window.location.href = '/success.html'
-            console.log("success")
+            
             }
         })
     })
@@ -53,8 +54,9 @@ $( document ).ready(function() {
             type: 'POST',
             data: obj,
             success: function (data) {
+                console.log("success")
             window.location.href = '/success.html'
-            console.log("success")
+            //console.log("success")
             }
         })
     })
