@@ -52,14 +52,28 @@ app.get('/api',(req,res,next) => {
 
 // Post for Pojects
 app.post('/projects',(req,res,next)=>{
-    Site.create({
-        imageOne:req.body.imageOne,
-        imageTwo:req.body.imageTwo,
-        imageThree:req.body.imageThree,
+
+    if (err) {
+        return res.end('error request file');
+    }
+    var data = new Image({
+        imageOne:req.file.imageOne,
+        imageTwo:req.file.imageTwo,
+        imageThree:req.file.imageThree,
         description:req.body.description,
         tech:req.body.tech,
         github:req.body.github,
-    })
+    });
+
+
+    // Site.create({
+    //     imageOne:req.body.imageOne,
+    //     imageTwo:req.body.imageTwo,
+    //     imageThree:req.body.imageThree,
+    //     description:req.body.description,
+    //     tech:req.body.tech,
+    //     github:req.body.github,
+    // })
     console.log(req.files.imageOne)
     .then(project=>{
         //console.log('user',user)
