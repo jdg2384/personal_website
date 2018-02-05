@@ -1,16 +1,17 @@
 $( document ).ready(function() {
-    var $xhr = $.getJSON('http://localhost:3010/login');
+    var $xhr = $.getJSON('http://localhost:3010/api');
     $xhr.done(function(data) {
         if ($xhr.status !== 200) {
             return;
         }
-        //console.log(data)
+        console.log(data)
         data.map(user => {
             //console.log('Index.js',user)
             $('#messDate').append(`
             <i>${user._id}</i>
-            <i>${user.username}</i>
-            <i>${user.password}</i>
+            <i>${user.description}</i>
+            <i>${user.tech}</i>
+            <i>${user.github}</i>
             <br/>
             <br/>
             `) 
@@ -57,6 +58,36 @@ $( document ).ready(function() {
                 console.log("success")
             window.location.href = '/success.html'
             //console.log("success")
+            }
+        })
+    })
+    // Project submit
+    $( "#post" ).on( "click", function() {
+        const  one = $('#one').val().replace("C:\\fakepath\\", "");
+        const  two = $( "#two" ).val().replace("C:\\fakepath\\", "")
+        const  three = $( "#three" ).val().replace("C:\\fakepath\\", "")
+        const  description = $( "#description" ).val()
+        const  tech = $( "#tech" ).val()
+        const  github= $( "#github" ).val()
+        // Log in object
+        let obj = {
+            imageOne: one,
+            imageTwo: two,
+            imageThree: three,
+            description: description,
+            tech: tech,
+            github: github,
+        }
+        console.log(obj)
+        // Ajax post 
+        $.ajax({
+            url: `/projects`,
+            type: 'POST',
+            data: obj,
+            success: function (data) {
+            console.log("success")
+            //window.location.href = '/success.html'
+            
             }
         })
     })
